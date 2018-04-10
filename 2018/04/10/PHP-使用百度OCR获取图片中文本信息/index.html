@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>莫名_Blog</title>
+  <title>PHP 使用百度OCR获取图片中文本信息 | 莫名_Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="莫名_Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="1、登录百度账号，找到百度ocr的文字识别，访问地址https://console.bce.baidu.com/ai/?_=1523326288844#/ai/ocr/overview/index 2、创建应用，创建之后 记住应用的API Key 和 Secret Key 3、获取token 1234567891011121314   $url = &apos;https://aip.baidubce.co">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP 使用百度OCR获取图片中文本信息">
+<meta property="og:url" content="http://yoursite.com/2018/04/10/PHP-使用百度OCR获取图片中文本信息/index.html">
 <meta property="og:site_name" content="莫名_Blog">
+<meta property="og:description" content="1、登录百度账号，找到百度ocr的文字识别，访问地址https://console.bce.baidu.com/ai/?_=1523326288844#/ai/ocr/overview/index 2、创建应用，创建之后 记住应用的API Key 和 Secret Key 3、获取token 1234567891011121314   $url = &apos;https://aip.baidubce.co">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-04-10T05:39:06.280Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="莫名_Blog">
+<meta name="twitter:title" content="PHP 使用百度OCR获取图片中文本信息">
+<meta name="twitter:description" content="1、登录百度账号，找到百度ocr的文字识别，访问地址https://console.bce.baidu.com/ai/?_=1523326288844#/ai/ocr/overview/index 2、创建应用，创建之后 记住应用的API Key 和 Secret Key 3、获取token 1234567891011121314   $url = &apos;https://aip.baidubce.co">
   
     <link rel="alternative" href="/atom.xml" title="莫名_Blog" type="application/atom+xml">
   
@@ -146,16 +150,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-PHP-使用百度OCR获取图片中文本信息" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-PHP-使用百度OCR获取图片中文本信息" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/10/PHP-使用百度OCR获取图片中文本信息/">PHP 使用百度OCR获取图片中文本信息</a>
+    <h1 class="article-title" itemprop="name">
+      PHP 使用百度OCR获取图片中文本信息
     </h1>
   
 
@@ -172,9 +174,11 @@
 <p>2、创建应用，创建之后 记住应用的API Key 和 Secret Key</p>
 <p>3、获取token</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">   $url = <span class="string">'https://aip.baidubce.com/oauth/2.0/token'</span>;</span><br><span class="line">   $post_data[<span class="string">'grant_type'</span>]       = <span class="string">'client_credentials'</span>;</span><br><span class="line">   $post_data[<span class="string">'client_id'</span>]      = <span class="string">'你的 Api Key'</span>;</span><br><span class="line">   $post_data[<span class="string">'client_secret'</span>] = <span class="string">'你的 Secret Key'</span>;</span><br><span class="line">   $o = <span class="string">""</span>;</span><br><span class="line">   <span class="keyword">foreach</span> ( $post_data <span class="keyword">as</span> $k =&gt; $v ) </span><br><span class="line">   &#123;</span><br><span class="line">   	$o.= <span class="string">"$k="</span> . urlencode( $v ). <span class="string">"&amp;"</span> ;</span><br><span class="line">   &#125;</span><br><span class="line">   $post_data = substr($o,<span class="number">0</span>,<span class="number">-1</span>);</span><br><span class="line">   </span><br><span class="line">   $res = request_post($url, $post_data);</span><br><span class="line">$resjson = json_decode($res,<span class="keyword">true</span>);</span><br><span class="line">$token = $resjson[<span class="string">"access_token"</span>];</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2018/04/10/PHP-使用百度OCR获取图片中文本信息/#more">more >></a>
-        
+<a id="more"></a>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">request_post</span><span class="params">($url = <span class="string">''</span>, $param = <span class="string">''</span>)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">empty</span>($url) || <span class="keyword">empty</span>($param)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        $postUrl = $url;</span><br><span class="line">        $curlPost = $param;</span><br><span class="line">        $curl = curl_init();<span class="comment">//初始化curl</span></span><br><span class="line">        curl_setopt($curl, CURLOPT_URL,$postUrl);<span class="comment">//抓取指定网页</span></span><br><span class="line">        curl_setopt($curl, CURLOPT_HEADER, <span class="number">0</span>);<span class="comment">//设置header</span></span><br><span class="line">        curl_setopt($curl, CURLOPT_RETURNTRANSFER, <span class="number">1</span>);<span class="comment">//要求结果为字符串且输出到屏幕上</span></span><br><span class="line">        curl_setopt($curl, CURLOPT_POST, <span class="number">1</span>);<span class="comment">//post提交方式</span></span><br><span class="line">        curl_setopt($curl, CURLOPT_POSTFIELDS, $curlPost);</span><br><span class="line">        $data = curl_exec($curl);<span class="comment">//运行curl</span></span><br><span class="line">        curl_close($curl);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> $data;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>4、识别图片文本，获取信息</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ocrurl = <span class="string">"https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic"</span>;</span><br><span class="line">$basicGeneralUrl = <span class="keyword">$this</span>-&gt;basicGeneralUrl($ocrurl,<span class="string">'123.jpg'</span>,$token);</span><br><span class="line">$ocrimg_json     = json_decode($basicGeneralUrl,<span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">basicGeneralUrl</span><span class="params">($ocrurl,$image,$token)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">empty</span>($image) || <span class="keyword">empty</span>($ocrurl) || <span class="keyword">empty</span>($token)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	$image_data = fread(fopen($image, <span class="string">'r'</span>), filesize($image)+<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">	$base64_image = base64_encode(($image_data));<span class="comment">//需要编译</span></span><br><span class="line">	<span class="comment">//print_r($image_data);</span></span><br><span class="line">	$date = <span class="keyword">array</span>(<span class="string">'image'</span>=&gt;$base64_image,<span class="string">'access_token'</span>=&gt;$token);</span><br><span class="line">    $curl = curl_init();<span class="comment">//初始化curl</span></span><br><span class="line">    curl_setopt($curl, CURLOPT_URL,$ocrurl);<span class="comment">//抓取指定网页</span></span><br><span class="line">    curl_setopt($curl, CURLOPT_HEADER, <span class="number">0</span>);<span class="comment">//设置header</span></span><br><span class="line">    curl_setopt($curl, CURLOPT_RETURNTRANSFER, <span class="number">1</span>);<span class="comment">//要求结果为字符串且输出到屏幕上</span></span><br><span class="line">    curl_setopt($curl, CURLOPT_POST, <span class="number">1</span>);<span class="comment">//post提交方式</span></span><br><span class="line">    curl_setopt($curl, CURLOPT_POSTFIELDS, $date);</span><br><span class="line">    $data = curl_exec($curl);<span class="comment">//运行curl</span></span><br><span class="line">    curl_close($curl);</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> $data;</span><br></pre></td></tr></table></figure>
       
 
       
@@ -185,16 +189,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/10/PHP-使用百度OCR获取图片中文本信息/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/04/10/PHP-使用百度OCR获取图片中文本信息/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/04/09/Python学习日常/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Python学习日常</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -214,239 +277,14 @@
 
 
 
-
   
-    <article id="post-Python学习日常" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/09/Python学习日常/">Python学习日常</a>
-    </h1>
   
 
-        
-        <a href="/2018/04/09/Python学习日常/" class="archive-article-date">
-  	<time datetime="2018-04-09T08:54:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>参考文档： <a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000" target="_blank" rel="noopener">https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000</a></p>
-<p>[TOC]</p>
-<h5 id="python-格式"><a href="#python-格式" class="headerlink" title="python 格式"></a>python 格式</h5><ol>
-<li>文件结尾为  .py，如123.py</li>
-<li>输出使用 print(),如下图，可输出多个字符串，用“，”隔开python试了下输出结尾不加分号也可以，我是出于习惯带上</li>
-</ol>
-        
-          <a class="article-more-a" href="/2018/04/09/Python学习日常/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/09/Python学习日常/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-PHP-几种排序算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/04/PHP-几种排序算法/">PHP 几种排序算法</a>
-    </h1>
   
 
-        
-        <a href="/2018/04/04/PHP-几种排序算法/" class="archive-article-date">
-  	<time datetime="2018-04-04T08:22:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1、冒泡排序法"><a href="#1、冒泡排序法" class="headerlink" title="1、冒泡排序法"></a>1、冒泡排序法</h3><p>相邻两两对比，从小往大排序，小的依次替换到前面。从大到小反之</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$arr=<span class="keyword">array</span>(<span class="number">5</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">56</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">41</span>,<span class="number">21</span>);</span><br><span class="line"></span><br><span class="line"> $l = count($arr);<span class="comment">//取出数据长度</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">for</span>($i=<span class="number">1</span>;$i&lt;$l;$i++)&#123;</span><br><span class="line">     <span class="keyword">for</span>($j=<span class="number">0</span>;$j&lt;$l-$i;$j++)&#123;</span><br><span class="line">         <span class="keyword">if</span>($arr[$j]&gt;$arr[$j+<span class="number">1</span>])&#123;</span><br><span class="line">             <span class="comment">//前后比较，小的依次往前浮动</span></span><br><span class="line">             $tem       = $arr[$j+<span class="number">1</span>];</span><br><span class="line">             $arr[$j+<span class="number">1</span>] = $arr[$j];</span><br><span class="line">             $arr[$j]   = $tem;</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2018/04/04/PHP-几种排序算法/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">PHP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/04/PHP-几种排序算法/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-My-New-Post" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/04/My-New-Post/">My New Post</a>
-    </h1>
   
 
-        
-        <a href="/2018/04/04/My-New-Post/" class="archive-article-date">
-  	<time datetime="2018-04-04T02:21:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">hello</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/04/My-New-Post/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
 
 
@@ -469,8 +307,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
