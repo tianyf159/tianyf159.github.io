@@ -70,6 +70,28 @@
       </tags>
   </entry>
   <entry>
+    <title>PHP 使用百度OCR获取图片中文本信息</title>
+    <url>/2018/04/10/PHP%20%E4%BD%BF%E7%94%A8%E7%99%BE%E5%BA%A6OCR%E8%8E%B7%E5%8F%96%E5%9B%BE%E7%89%87%E4%B8%AD%E6%96%87%E6%9C%AC%E4%BF%A1%E6%81%AF/</url>
+    <content><![CDATA[<p>1、登录百度账号，找到百度ocr的文字识别，访问地址<a href="https://console.bce.baidu.com/ai/?_=1523326288844#/ai/ocr/overview/index">https://console.bce.baidu.com/ai/?_=1523326288844#/ai/ocr/overview/index</a></p>
+<p>2、创建应用，创建之后 记住应用的API Key 和 Secret Key</p>
+<p>3、获取token</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$url</span> = <span class="string">&#x27;https://aip.baidubce.com/oauth/2.0/token&#x27;</span>;</span><br><span class="line"><span class="variable">$post_data</span>[<span class="string">&#x27;grant_type&#x27;</span>]       = <span class="string">&#x27;client_credentials&#x27;</span>;</span><br><span class="line"><span class="variable">$post_data</span>[<span class="string">&#x27;client_id&#x27;</span>]      = <span class="string">&#x27;你的 Api Key&#x27;</span>;</span><br><span class="line"><span class="variable">$post_data</span>[<span class="string">&#x27;client_secret&#x27;</span>] = <span class="string">&#x27;你的 Secret Key&#x27;</span>;</span><br><span class="line"><span class="variable">$o</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="keyword">foreach</span> ( <span class="variable">$post_data</span> <span class="keyword">as</span> <span class="variable">$k</span> =&gt; <span class="variable">$v</span> ) </span><br><span class="line">&#123;</span><br><span class="line">	<span class="variable">$o</span>.= <span class="string">&quot;<span class="subst">$k</span>=&quot;</span> . <span class="title function_ invoke__">urlencode</span>( <span class="variable">$v</span> ). <span class="string">&quot;&amp;&quot;</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$post_data</span> = <span class="title function_ invoke__">substr</span>(<span class="variable">$o</span>,<span class="number">0</span>,-<span class="number">1</span>);</span><br><span class="line"><span class="variable">$res</span> = <span class="title function_ invoke__">request_post</span>(<span class="variable">$url</span>, <span class="variable">$post_data</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$resjson</span> = <span class="title function_ invoke__">json_decode</span>(<span class="variable">$res</span>,<span class="literal">true</span>);</span><br><span class="line"><span class="variable">$token</span> = <span class="variable">$resjson</span>[<span class="string">&quot;access_token&quot;</span>];</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">request_post</span>(<span class="params"><span class="variable">$url</span> = <span class="string">&#x27;&#x27;</span>, <span class="variable">$param</span> = <span class="string">&#x27;&#x27;</span></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">empty</span>(<span class="variable">$url</span>) || <span class="keyword">empty</span>(<span class="variable">$param</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable">$postUrl</span> = <span class="variable">$url</span>;</span><br><span class="line">        <span class="variable">$curlPost</span> = <span class="variable">$param</span>;</span><br><span class="line">        <span class="variable">$curl</span> = <span class="title function_ invoke__">curl_init</span>();<span class="comment">//初始化curl</span></span><br><span class="line">        <span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_URL,<span class="variable">$postUrl</span>);<span class="comment">//抓取指定网页</span></span><br><span class="line">        <span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_HEADER, <span class="number">0</span>);<span class="comment">//设置header</span></span><br><span class="line">        <span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_RETURNTRANSFER, <span class="number">1</span>);<span class="comment">//要求结果为字符串且输出到屏幕上</span></span><br><span class="line">        <span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_POST, <span class="number">1</span>);<span class="comment">//post提交方式</span></span><br><span class="line">        <span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_POSTFIELDS, <span class="variable">$curlPost</span>);</span><br><span class="line">        <span class="variable">$data</span> = <span class="title function_ invoke__">curl_exec</span>(<span class="variable">$curl</span>);<span class="comment">//运行curl</span></span><br><span class="line">        <span class="title function_ invoke__">curl_close</span>(<span class="variable">$curl</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$data</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>4、识别图片文本，获取信息</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$ocrurl</span> = <span class="string">&quot;https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic&quot;</span>;</span><br><span class="line"><span class="variable">$basicGeneralUrl</span> = <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">basicGeneralUrl</span>(<span class="variable">$ocrurl</span>,<span class="string">&#x27;123.jpg&#x27;</span>,<span class="variable">$token</span>);</span><br><span class="line"><span class="variable">$ocrimg_json</span>     = <span class="title function_ invoke__">json_decode</span>(<span class="variable">$basicGeneralUrl</span>,<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">basicGeneralUrl</span>(<span class="params"><span class="variable">$ocrurl</span>,<span class="variable">$image</span>,<span class="variable">$token</span></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">empty</span>(<span class="variable">$image</span>) || <span class="keyword">empty</span>(<span class="variable">$ocrurl</span>) || <span class="keyword">empty</span>(<span class="variable">$token</span>)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	<span class="variable">$image_data</span> = <span class="title function_ invoke__">fread</span>(<span class="title function_ invoke__">fopen</span>(<span class="variable">$image</span>, <span class="string">&#x27;r&#x27;</span>), <span class="title function_ invoke__">filesize</span>(<span class="variable">$image</span>)+<span class="number">1</span>);</span><br><span class="line">	<span class="variable">$base64_image</span> = <span class="title function_ invoke__">base64_encode</span>((<span class="variable">$image_data</span>));<span class="comment">//需要编译</span></span><br><span class="line">	<span class="variable">$date</span> = <span class="keyword">array</span>(<span class="string">&#x27;image&#x27;</span>=&gt;<span class="variable">$base64_image</span>,<span class="string">&#x27;access_token&#x27;</span>=&gt;<span class="variable">$token</span>);</span><br><span class="line">	<span class="variable">$curl</span> = <span class="title function_ invoke__">curl_init</span>();<span class="comment">//初始化curl</span></span><br><span class="line">	<span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_URL,<span class="variable">$ocrurl</span>);<span class="comment">//抓取指定网页</span></span><br><span class="line">	<span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_HEADER, <span class="number">0</span>);<span class="comment">//设置header</span></span><br><span class="line">	<span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_RETURNTRANSFER, <span class="number">1</span>);<span class="comment">//要求结果为字符串且输出到屏幕上</span></span><br><span class="line">	<span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_POST, <span class="number">1</span>);<span class="comment">//post提交方式</span></span><br><span class="line">	<span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_POSTFIELDS, <span class="variable">$date</span>);</span><br><span class="line">	<span class="variable">$data</span> = <span class="title function_ invoke__">curl_exec</span>(<span class="variable">$curl</span>);<span class="comment">//运行curl</span></span><br><span class="line">	<span class="title function_ invoke__">curl_close</span>(<span class="variable">$curl</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="variable">$data</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>php</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python日常</title>
     <url>/2018/04/09/Python%E6%97%A5%E5%B8%B8/</url>
     <content><![CDATA[<blockquote>
@@ -102,25 +124,123 @@
       </tags>
   </entry>
   <entry>
-    <title>PHP 使用百度OCR获取图片中文本信息</title>
-    <url>/2018/04/10/PHP%20%E4%BD%BF%E7%94%A8%E7%99%BE%E5%BA%A6OCR%E8%8E%B7%E5%8F%96%E5%9B%BE%E7%89%87%E4%B8%AD%E6%96%87%E6%9C%AC%E4%BF%A1%E6%81%AF/</url>
-    <content><![CDATA[<p>1、登录百度账号，找到百度ocr的文字识别，访问地址<a href="https://console.bce.baidu.com/ai/?_=1523326288844#/ai/ocr/overview/index">https://console.bce.baidu.com/ai/?_=1523326288844#/ai/ocr/overview/index</a></p>
-<p>2、创建应用，创建之后 记住应用的API Key 和 Secret Key</p>
-<p>3、获取token</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$url</span> = <span class="string">&#x27;https://aip.baidubce.com/oauth/2.0/token&#x27;</span>;</span><br><span class="line"><span class="variable">$post_data</span>[<span class="string">&#x27;grant_type&#x27;</span>]       = <span class="string">&#x27;client_credentials&#x27;</span>;</span><br><span class="line"><span class="variable">$post_data</span>[<span class="string">&#x27;client_id&#x27;</span>]      = <span class="string">&#x27;你的 Api Key&#x27;</span>;</span><br><span class="line"><span class="variable">$post_data</span>[<span class="string">&#x27;client_secret&#x27;</span>] = <span class="string">&#x27;你的 Secret Key&#x27;</span>;</span><br><span class="line"><span class="variable">$o</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="keyword">foreach</span> ( <span class="variable">$post_data</span> <span class="keyword">as</span> <span class="variable">$k</span> =&gt; <span class="variable">$v</span> ) </span><br><span class="line">&#123;</span><br><span class="line">	<span class="variable">$o</span>.= <span class="string">&quot;<span class="subst">$k</span>=&quot;</span> . <span class="title function_ invoke__">urlencode</span>( <span class="variable">$v</span> ). <span class="string">&quot;&amp;&quot;</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$post_data</span> = <span class="title function_ invoke__">substr</span>(<span class="variable">$o</span>,<span class="number">0</span>,-<span class="number">1</span>);</span><br><span class="line"><span class="variable">$res</span> = <span class="title function_ invoke__">request_post</span>(<span class="variable">$url</span>, <span class="variable">$post_data</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$resjson</span> = <span class="title function_ invoke__">json_decode</span>(<span class="variable">$res</span>,<span class="literal">true</span>);</span><br><span class="line"><span class="variable">$token</span> = <span class="variable">$resjson</span>[<span class="string">&quot;access_token&quot;</span>];</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">request_post</span>(<span class="params"><span class="variable">$url</span> = <span class="string">&#x27;&#x27;</span>, <span class="variable">$param</span> = <span class="string">&#x27;&#x27;</span></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">empty</span>(<span class="variable">$url</span>) || <span class="keyword">empty</span>(<span class="variable">$param</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable">$postUrl</span> = <span class="variable">$url</span>;</span><br><span class="line">        <span class="variable">$curlPost</span> = <span class="variable">$param</span>;</span><br><span class="line">        <span class="variable">$curl</span> = <span class="title function_ invoke__">curl_init</span>();<span class="comment">//初始化curl</span></span><br><span class="line">        <span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_URL,<span class="variable">$postUrl</span>);<span class="comment">//抓取指定网页</span></span><br><span class="line">        <span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_HEADER, <span class="number">0</span>);<span class="comment">//设置header</span></span><br><span class="line">        <span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_RETURNTRANSFER, <span class="number">1</span>);<span class="comment">//要求结果为字符串且输出到屏幕上</span></span><br><span class="line">        <span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_POST, <span class="number">1</span>);<span class="comment">//post提交方式</span></span><br><span class="line">        <span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_POSTFIELDS, <span class="variable">$curlPost</span>);</span><br><span class="line">        <span class="variable">$data</span> = <span class="title function_ invoke__">curl_exec</span>(<span class="variable">$curl</span>);<span class="comment">//运行curl</span></span><br><span class="line">        <span class="title function_ invoke__">curl_close</span>(<span class="variable">$curl</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$data</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>4、识别图片文本，获取信息</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$ocrurl</span> = <span class="string">&quot;https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic&quot;</span>;</span><br><span class="line"><span class="variable">$basicGeneralUrl</span> = <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">basicGeneralUrl</span>(<span class="variable">$ocrurl</span>,<span class="string">&#x27;123.jpg&#x27;</span>,<span class="variable">$token</span>);</span><br><span class="line"><span class="variable">$ocrimg_json</span>     = <span class="title function_ invoke__">json_decode</span>(<span class="variable">$basicGeneralUrl</span>,<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">basicGeneralUrl</span>(<span class="params"><span class="variable">$ocrurl</span>,<span class="variable">$image</span>,<span class="variable">$token</span></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">empty</span>(<span class="variable">$image</span>) || <span class="keyword">empty</span>(<span class="variable">$ocrurl</span>) || <span class="keyword">empty</span>(<span class="variable">$token</span>)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	<span class="variable">$image_data</span> = <span class="title function_ invoke__">fread</span>(<span class="title function_ invoke__">fopen</span>(<span class="variable">$image</span>, <span class="string">&#x27;r&#x27;</span>), <span class="title function_ invoke__">filesize</span>(<span class="variable">$image</span>)+<span class="number">1</span>);</span><br><span class="line">	<span class="variable">$base64_image</span> = <span class="title function_ invoke__">base64_encode</span>((<span class="variable">$image_data</span>));<span class="comment">//需要编译</span></span><br><span class="line">	<span class="variable">$date</span> = <span class="keyword">array</span>(<span class="string">&#x27;image&#x27;</span>=&gt;<span class="variable">$base64_image</span>,<span class="string">&#x27;access_token&#x27;</span>=&gt;<span class="variable">$token</span>);</span><br><span class="line">	<span class="variable">$curl</span> = <span class="title function_ invoke__">curl_init</span>();<span class="comment">//初始化curl</span></span><br><span class="line">	<span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_URL,<span class="variable">$ocrurl</span>);<span class="comment">//抓取指定网页</span></span><br><span class="line">	<span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_HEADER, <span class="number">0</span>);<span class="comment">//设置header</span></span><br><span class="line">	<span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_RETURNTRANSFER, <span class="number">1</span>);<span class="comment">//要求结果为字符串且输出到屏幕上</span></span><br><span class="line">	<span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_POST, <span class="number">1</span>);<span class="comment">//post提交方式</span></span><br><span class="line">	<span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_POSTFIELDS, <span class="variable">$date</span>);</span><br><span class="line">	<span class="variable">$data</span> = <span class="title function_ invoke__">curl_exec</span>(<span class="variable">$curl</span>);<span class="comment">//运行curl</span></span><br><span class="line">	<span class="title function_ invoke__">curl_close</span>(<span class="variable">$curl</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="variable">$data</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+    <title>node_exporter+Prometheus+Grafana搭建服务器资源监控系统</title>
+    <url>/2022/06/21/node_exporter+Prometheus+grafana%E6%90%AD%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%B5%84%E6%BA%90%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<blockquote>
+<p>参考资料：<a href="https://blog.csdn.net/qq_36787243/article/details/119906754">https://blog.csdn.net/qq_36787243&#x2F;article&#x2F;details&#x2F;119906754</a></p>
+</blockquote>
+<h2 id="一、作用说明"><a href="#一、作用说明" class="headerlink" title="一、作用说明"></a><strong>一、作用说明</strong></h2><p>先来简单介绍一下：node_exporter、Prometheus 及 Grafana 的作用：</p>
+<p>​                 <img src="/../image/image-kJdgdriJVgaW4EjBHGeJBQ.png" alt="img"></p>
+<p>​        </p>
+<p>※ node_exporter：收集服务器资源相关数据。</p>
+<p>※ Prometheus：用于储存及收集数据。</p>
+<p>※ Grafana：展示数据。</p>
+<h2 id="二、部署-node-exporter"><a href="#二、部署-node-exporter" class="headerlink" title="二、部署 node_exporter"></a><strong>二、部署 node_exporter</strong></h2><ol>
+<li><h3 id="下载部署命令："><a href="#下载部署命令：" class="headerlink" title="下载部署命令："></a><strong>下载部署命令：</strong></h3></li>
+</ol>
+<p>cd &#x2F;usr&#x2F;local&#x2F;src&#x2F;</p>
+<p>wget <a href="https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz">https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz</a></p>
+<p>服务器下载太慢时，可以直接从 GitHub 网站下载，并将压缩包上传至服务器。</p>
+<p>tar -zxvf node_exporter-1.2.2.linux-amd64.tar.gz -C &#x2F;usr&#x2F;local&#x2F;</p>
+<p>cd &#x2F;usr&#x2F;local&#x2F;</p>
+<p>mv node_exporter-1.2.2.linux-amd64&#x2F; node_exporter&#x2F;</p>
+<ol>
+<li><h3 id="启动-node-exporter-命令-："><a href="#启动-node-exporter-命令-：" class="headerlink" title="启动 node_exporter 命令****："></a><strong>启动 node_exporter 命令****：</strong></h3></li>
+</ol>
+<p>nohup &#x2F;usr&#x2F;local&#x2F;node_exporter&#x2F;node_exporter &amp;</p>
+<ol>
+<li><h3 id="验证访问："><a href="#验证访问：" class="headerlink" title="验证访问："></a><strong>验证访问：</strong></h3></li>
+</ol>
+<p>访问 <a href="http://192.168.9.128:9100，这里的">http://192.168.9.128:9100，这里的</a> IP 替换为服务器 IP 。</p>
+<p>出现以下页面说明启动成功：</p>
+<p>​                 <img src="/../image/image-dOtiIwqLjjMLYQuI38FNYg.png" alt="img">        </p>
+<h2 id="三、部署-Prometheus"><a href="#三、部署-Prometheus" class="headerlink" title="三、部署 Prometheus"></a><strong>三、部署 Prometheus</strong></h2><ol>
+<li><h3 id="下载部署命令：-1"><a href="#下载部署命令：-1" class="headerlink" title="下载部署命令："></a><strong>下载部署命令：</strong></h3></li>
+</ol>
+<p>cd &#x2F;usr&#x2F;local&#x2F;src&#x2F;</p>
+<p>wget <a href="https://github.com/prometheus/prometheus/releases/download/v2.29.1/prometheus-2.29.1.linux-amd64.tar.gz">https://github.com/prometheus/prometheus/releases/download/v2.29.1/prometheus-2.29.1.linux-amd64.tar.gz</a></p>
+<p>cd &#x2F;usr&#x2F;local&#x2F;src&#x2F;</p>
+<p>tar -zxvf prometheus-2.29.1.linux-amd64.tar.gz -C &#x2F;usr&#x2F;local&#x2F;</p>
+<p>cd &#x2F;usr&#x2F;local&#x2F;</p>
+<p>mv prometheus-2.29.1.linux-amd64&#x2F; prometheus&#x2F;</p>
+<ol>
+<li><h3 id="修改配置文件："><a href="#修改配置文件：" class="headerlink" title="修改配置文件："></a><strong>修改配置文件：</strong></h3></li>
+</ol>
+<p>vim prometheus.yml</p>
+<p>修改成当前服务器的 IP ：</p>
+<p>​                 <img src="/../image/image-h-O_Px3yqerEj-SZ7e5v0A.png" alt="img">        </p>
+<ol>
+<li><h3 id="启动-prometheus-命令-："><a href="#启动-prometheus-命令-：" class="headerlink" title="启动 prometheus 命令****："></a><strong>启动 prometheus 命令****：</strong></h3></li>
+</ol>
+<p>nohup &#x2F;usr&#x2F;local&#x2F;prometheus&#x2F;prometheus –config.file&#x3D;&#x2F;usr&#x2F;local&#x2F;prometheus&#x2F;prometheus.yml –storage.tsdb.path&#x3D;&#x2F;var&#x2F;lib&#x2F;prometheus &amp;</p>
+<ol>
+<li><h3 id="验证访问：-1"><a href="#验证访问：-1" class="headerlink" title="验证访问："></a><strong>验证访问：</strong></h3></li>
+</ol>
+<p>访问 <a href="http://192.168.9.128:9090，这里的">http://192.168.9.128:9090，这里的</a> IP 替换为服务器 IP 。</p>
+<p>出现以下页面说明启动成功：</p>
+<p>​                        <img src="/../image/image-u2cs4ZiXNZcGBS7DOUv-4Q.png" alt="img">        </p>
+<p>​                 <img src="/../image/image-g6Zvc8Cmugh56f0yz3E8WQ.png" alt="img">        </p>
+<p>​                 <img src="/../image/image-jtpttWfYRMmSVbpCKFcCiw.png" alt="img">        </p>
+<ol>
+<li><h3 id="修改配置文件：-1"><a href="#修改配置文件：-1" class="headerlink" title="修改配置文件："></a><strong>修改配置文件：</strong></h3></li>
+</ol>
+<p>默认 prometheus 接收 node_exporter 采集的数据，再次修改 prometheus 配置文件，重新启动 prometheus 。</p>
+<p>vim prometheus.yml</p>
+<p>​                 <img src="/../image/image-ngz7dc2ogbXF7cpXrj8Elg.png" alt="img">        </p>
+<p>netstat -anput</p>
+<p>kill -9 2735</p>
+<p>nohup &#x2F;usr&#x2F;local&#x2F;prometheus&#x2F;prometheus –config.file&#x3D;&#x2F;usr&#x2F;local&#x2F;prometheus&#x2F;prometheus.yml –storage.tsdb.path&#x3D;&#x2F;var&#x2F;lib&#x2F;prometheus &amp;</p>
+<ol>
+<li><h3 id="重启后验证访问："><a href="#重启后验证访问：" class="headerlink" title="重启后验证访问："></a><strong>重启后验证访问：</strong></h3></li>
+</ol>
+<p>访问：<a href="http://192.168.9.128:9090/targets">http://192.168.9.128:9090/targets</a></p>
+<p>​                 <img src="/../image/image-SMz0y840P5fXJ0dfW05bog.png" alt="img">        </p>
+<h2 id="四、部署-Grafana"><a href="#四、部署-Grafana" class="headerlink" title="四、部署 Grafana"></a><strong>四、部署 Grafana</strong></h2><ol>
+<li><h3 id="下载部署命令：-2"><a href="#下载部署命令：-2" class="headerlink" title="下载部署命令："></a><strong>下载部署命令：</strong></h3></li>
+</ol>
+<p>cd &#x2F;usr&#x2F;local&#x2F;src&#x2F; </p>
+<p>wget <a href="https://dl.grafana.com/oss/release/grafana-8.1.2-1.x86_64.rpm">https://dl.grafana.com/oss/release/grafana-8.1.2-1.x86_64.rpm</a></p>
+<p>yum localinstall grafana-8.1.2-1.x86_64.rpm</p>
+<ol>
+<li><h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a><strong>配置文件</strong></h3></li>
+</ol>
+<p>配置文件位于 &#x2F;etc&#x2F;grafana&#x2F;grafana.ini ，这里暂时保持默认配置即可。</p>
+<ol>
+<li><h3 id="开机自启动"><a href="#开机自启动" class="headerlink" title="开机自启动"></a><strong>开机自启动</strong></h3></li>
+</ol>
+<p>systemctl enable grafana-server</p>
+<p>systemctl start grafana-server</p>
+<ol>
+<li><h3 id="验证访问"><a href="#验证访问" class="headerlink" title="验证访问"></a><strong>验证访问</strong></h3></li>
+</ol>
+<p>访问 <a href="http://192.168.9.128:3000，这里的">http://192.168.9.128:3000，这里的</a> IP 替换为服务器 IP 。</p>
+<p>默认账号名&#x2F;密码：admin&#x2F;admin。（首次登录会修改密码）</p>
+<p>​                 <img src="/../image/image-7KR-NMwJw9yv4IPIgDrKQQ.png" alt="img">        </p>
+<ol>
+<li><h3 id="添加数据源"><a href="#添加数据源" class="headerlink" title="添加数据源"></a><strong>添加数据源</strong></h3></li>
+</ol>
+<p>​                 <img src="/../image/image-hLhKLzp4Zt-TEjItnwFpbA.png" alt="img">        </p>
+<p>​                 <img src="/../image/image-lJrJH873qeKyO6X5GSFWCA.png" alt="img">        </p>
+<p>​                 <img src="/../image/image-AY1UEGEHRh3WwNRYacvAhQ.png" alt="img">        </p>
+<p>点击“Save&amp;test”,出现“Data source is working”,代表数据源配置成功。</p>
+<p>​                 <img src="/../image/image-HZ_UxJv7_tngjr9nUE6QLg.png" alt="img">        </p>
+<ol>
+<li><h3 id="导入-Dashboard"><a href="#导入-Dashboard" class="headerlink" title="导入 Dashboard"></a><strong>导入 Dashboard</strong></h3></li>
+</ol>
+<p>​                 <img src="/../image/image-aU7WOgB0qy5AE9TTBB9_eQ.png" alt="img">        </p>
+<p>输入 ID ：9276，点击 “Load”。（ 9276 是比较经典好用的一个展示服务器资源使用情况的模板，这里以导入这个模板为例）</p>
+<p>​                 <img src="/../image/image-_9_5jZ3yFuaSJvvnJhv-4w.png" alt="img">        </p>
+<p>选择 data source，下拉选择上一步配置的数据源，点击 “Import”：</p>
+<p>​                 <img src="/../image/image-1SFoZZfqlYNJJAqWg1h1Dw.png" alt="img">        </p>
+<ol>
+<li><h3 id="展示效果图："><a href="#展示效果图：" class="headerlink" title="展示效果图："></a><strong>展示效果图：</strong></h3></li>
+</ol>
+<p>​                 <img src="/../image/image-7yPl7SerV1LHpWQ6yGvsXg.png" alt="img">        </p>
+<h2 id="五、搭建总结"><a href="#五、搭建总结" class="headerlink" title="五、搭建总结"></a><strong>五、搭建总结</strong></h2><p>搭建过程中会遇到一些问题，不必惊慌。仔细查看搭建步骤，若出现不能正常访问界面的情况。可尝试进行直接启动，查看启动信息中 error 信息。配置文件对格式要求严格，请修改配置时注意，空格，标点符号采用英文形式。</p>
 ]]></content>
       <tags>
-        <tag>php</tag>
+        <tag>可视化</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
 </search>
