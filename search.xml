@@ -70,6 +70,38 @@
       </tags>
   </entry>
   <entry>
+    <title>Python日常</title>
+    <url>/2018/04/09/Python%E6%97%A5%E5%B8%B8/</url>
+    <content><![CDATA[<blockquote>
+<p>参考文档： <a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000">https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000</a></p>
+</blockquote>
+<ul>
+<li><h3 id="Python-格式"><a href="#Python-格式" class="headerlink" title="Python 格式"></a>Python 格式</h3></li>
+</ul>
+<ol>
+<li>文件结尾为 .py，如123.py</li>
+<li>输出使用 print(),如下图，可输出多个字符串，用“，”隔开python试了下输出结尾不加分号也可以，我是出于习惯带上</li>
+</ol>
+<span id="more"></span>
+
+
+
+<p><img src="/../image/image-20180409173759.png" alt="20180409173759"></p>
+<ul>
+<li><h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3></li>
+</ul>
+<p><strong>1、算术运算符</strong></p>
+<p> 加、减、乘、除、除取整、除取余、次方</p>
+<p> +、 -、 *、 &#x2F;、 &#x2F;&#x2F;、 %、 **</p>
+<p><strong>2、位运算符</strong></p>
+<p>且、或、取反，异或，向左位移（二进制）、向右位移（二进制）</p>
+<p>&amp;、 |、 ~、 ^、 &lt;&lt;&lt;、 &gt;&gt;&gt;</p>
+]]></content>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>PHP使用百度OCR获取图片中文本信息</title>
     <url>/2018/04/10/PHP%20%E4%BD%BF%E7%94%A8%E7%99%BE%E5%BA%A6OCR%E8%8E%B7%E5%8F%96%E5%9B%BE%E7%89%87%E4%B8%AD%E6%96%87%E6%9C%AC%E4%BF%A1%E6%81%AF/</url>
     <content><![CDATA[<p>1、登录百度账号，找到百度ocr的文字识别，访问地址<a href="https://console.bce.baidu.com/ai/?_=1523326288844#/ai/ocr/overview/index">https://console.bce.baidu.com/ai/?_=1523326288844#/ai/ocr/overview/index</a></p>
@@ -210,38 +242,6 @@
       <tags>
         <tag>可视化</tag>
         <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python日常</title>
-    <url>/2018/04/09/Python%E6%97%A5%E5%B8%B8/</url>
-    <content><![CDATA[<blockquote>
-<p>参考文档： <a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000">https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000</a></p>
-</blockquote>
-<ul>
-<li><h3 id="Python-格式"><a href="#Python-格式" class="headerlink" title="Python 格式"></a>Python 格式</h3></li>
-</ul>
-<ol>
-<li>文件结尾为 .py，如123.py</li>
-<li>输出使用 print(),如下图，可输出多个字符串，用“，”隔开python试了下输出结尾不加分号也可以，我是出于习惯带上</li>
-</ol>
-<span id="more"></span>
-
-
-
-<p><img src="/../image/image-20180409173759.png" alt="20180409173759"></p>
-<ul>
-<li><h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3></li>
-</ul>
-<p><strong>1、算术运算符</strong></p>
-<p> 加、减、乘、除、除取整、除取余、次方</p>
-<p> +、 -、 *、 &#x2F;、 &#x2F;&#x2F;、 %、 **</p>
-<p><strong>2、位运算符</strong></p>
-<p>且、或、取反，异或，向左位移（二进制）、向右位移（二进制）</p>
-<p>&amp;、 |、 ~、 ^、 &lt;&lt;&lt;、 &gt;&gt;&gt;</p>
-]]></content>
-      <tags>
-        <tag>python</tag>
       </tags>
   </entry>
   <entry>
