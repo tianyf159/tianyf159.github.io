@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Grafana9+InfluxDB2+Jmeter5搭建可视化性能测试监控平台（Windows）</title>
+    <url>/2022/06/20/Grafana9+InfluxDB2+Jmeter5%E6%90%AD%E5%BB%BA%E5%8F%AF%E8%A7%86%E5%8C%96%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E7%9B%91%E6%8E%A7%E5%B9%B3%E5%8F%B0%EF%BC%88Windows%EF%BC%89/</url>
+    <content><![CDATA[<ul>
+<li><h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2></li>
+</ul>
+<p><strong>Grafana下载安装</strong></p>
+<p><em><span id="more"></span></em></p>
+<p>下载地址：<a href="https://grafana.com/grafana/download?platform=windows">https://grafana.com/grafana/download?platform=windows</a>，这里下载最新版9.0<img src="/../image/image-20220617164333555.png" alt="image-20220617164333555"></p>
+<p>解压后进入bin目录，双击grafana-server.exe启动即可</p>
+<p><img src="/../image/image-20220617164543153.png" alt="image-20220617164543153"></p>
+<p><img src="/../image/image-20220617164615445.png" alt="image-20220617164615445"></p>
+<p>启动默认端口是3000，访问<a href="http://localhost:3000/">http://localhost:3000/</a> 初始密码 admin&#x2F;admin</p>
+<p><img src="/../image/image-20220617164719686.png" alt="image-20220617164719686"></p>
+<p><strong>InfluxDB下载安装</strong></p>
+<p>下载地址：<a href="https://docs.influxdata.com/influxdb/v2.0/install/?t=Windows">https://docs.influxdata.com/influxdb/v2.0/install/?t=Windows</a>这里下载最新版本2-2.0.9</p>
+<p><img src="/../image/image-20220617165119302.png" alt="image-20220617165119302"></p>
+<p>命令行进入文件目录，输入influxd回车即可</p>
+<p><img src="/../image/image-20220617165545730.png" alt="image-20220617165545730"></p>
+<p>默认端口为8086，浏览器输入<a href="http://localhost:8086/signin">http://localhost:8086/signin</a> 初始用户密码，admin&#x2F;admin,第一次进入需要修改密码创建数据库信息</p>
+<p><img src="/../image/image-20220617170011425.png" alt="image-20220617170011425"></p>
+<p><img src="/../image/image-20220617170049172.png" alt="image-20220617170049172"></p>
+<p><strong>jmeter下载安装</strong></p>
+<p>下载地址：<a href="https://jmeter.apache.org/download_jmeter.cgi">https://jmeter.apache.org/download_jmeter.cgi</a>这里下载最新版5.5</p>
+<p><img src="/../image/image-20220617170308132.png" alt="image-20220617170308132"></p>
+<p>环境变量自行查询配置。</p>
+<p><strong>java11下载安装</strong></p>
+<p>下载地址：<a href="https://www.oracle.com/java/technologies/downloads/#java11-windows">https://www.oracle.com/java/technologies/downloads/#java11-windows</a></p>
+<p><img src="/../image/image-20220617172800577.png" alt="image-20220617172800577"></p>
+<p>环境变量自行配置安装</p>
+<ul>
+<li><h2 id="grafana配置数据源influxdb2-0"><a href="#grafana配置数据源influxdb2-0" class="headerlink" title="grafana配置数据源influxdb2.0"></a>grafana配置数据源influxdb2.0</h2></li>
+</ul>
+<p>进入grafanna首页</p>
+<p><img src="/../image/image-20220617171012724.png" alt="image-20220617171012724"></p>
+<p>选择influxDB</p>
+<p><img src="/../image/image-20220617171610418.png" alt="image-20220617171610418"></p>
+<p><img src="/../image/image-20220617171708354.png" alt="image-20220617171708354"></p>
+<p>下拉</p>
+<p><img src="/../image/image-20220617172039423.png" alt="image-20220617172039423"></p>
+<p><img src="/../image/image-20220617172208175.png" alt="image-20220617172208175"></p>
+<p>token获取</p>
+<p><img src="/../image/image-20220617172257391.png" alt="image-20220617172257391"></p>
+<p><img src="/../image/image-20220617172328990.png" alt="image-20220617172328990"></p>
+<ul>
+<li><h2 id="grafana导入Jmeter保存到influxdb2-0的数据模板"><a href="#grafana导入Jmeter保存到influxdb2-0的数据模板" class="headerlink" title="grafana导入Jmeter保存到influxdb2.0的数据模板"></a>grafana导入Jmeter保存到influxdb2.0的数据模板</h2></li>
+</ul>
+<p>模板插件下载地址：<a href="https://grafana.com/grafana/dashboards/?search=jmeter">https://grafana.com/grafana/dashboards/?search=jmeter</a></p>
+<p><img src="/../image/image-20220617173006561.png" alt="image-20220617173006561"></p>
+<p><img src="/../image/image-20220617173101665.png" alt="image-20220617173101665"></p>
+<p>在grafana中导入下载的json模板</p>
+<p><img src="/../image/image-20220617173309351.png" alt="image-20220617173309351"></p>
+<p>数据源选择<img src="/../image/image-20220617173421822.png" alt="image-20220617173421822"></p>
+<ul>
+<li><h2 id="在jmeter中添加后置监听器"><a href="#在jmeter中添加后置监听器" class="headerlink" title="在jmeter中添加后置监听器"></a>在jmeter中添加后置监听器</h2></li>
+</ul>
+<p>下载插件包下载插件jar包： <a href="https://github.com/mderevyankoaqa/jmeter-influxdb2-listener-plugin/releases">https://github.com/mderevyankoaqa/jmeter-influxdb2-listener-plugin/releases</a></p>
+<p><img src="/../image/image-20220617173725870.png" alt="image-20220617173725870"></p>
+<p>将jar包放到jmeter下&#x2F;lib&#x2F;ext</p>
+<p>启动jmeter，导入准备好的测试脚本，配置后端监听器</p>
+<p><img src="/../image/image-20220617174146159.png" alt="image-20220617174146159"></p>
+<p>运行脚本</p>
+<p><img src="/../image/image-20220617174357657.png" alt="image-20220617174357657"></p>
+]]></content>
+      <tags>
+        <tag>可视化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PHP 使用百度OCR获取图片中文本信息</title>
+    <url>/2018/04/10/PHP%20%E4%BD%BF%E7%94%A8%E7%99%BE%E5%BA%A6OCR%E8%8E%B7%E5%8F%96%E5%9B%BE%E7%89%87%E4%B8%AD%E6%96%87%E6%9C%AC%E4%BF%A1%E6%81%AF/</url>
+    <content><![CDATA[<p>1、登录百度账号，找到百度ocr的文字识别，访问地址<a href="https://console.bce.baidu.com/ai/?_=1523326288844#/ai/ocr/overview/index">https://console.bce.baidu.com/ai/?_=1523326288844#/ai/ocr/overview/index</a></p>
+<p>2、创建应用，创建之后 记住应用的API Key 和 Secret Key</p>
+<p>3、获取token</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$url</span> = <span class="string">&#x27;https://aip.baidubce.com/oauth/2.0/token&#x27;</span>;</span><br><span class="line"><span class="variable">$post_data</span>[<span class="string">&#x27;grant_type&#x27;</span>]       = <span class="string">&#x27;client_credentials&#x27;</span>;</span><br><span class="line"><span class="variable">$post_data</span>[<span class="string">&#x27;client_id&#x27;</span>]      = <span class="string">&#x27;你的 Api Key&#x27;</span>;</span><br><span class="line"><span class="variable">$post_data</span>[<span class="string">&#x27;client_secret&#x27;</span>] = <span class="string">&#x27;你的 Secret Key&#x27;</span>;</span><br><span class="line"><span class="variable">$o</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="keyword">foreach</span> ( <span class="variable">$post_data</span> <span class="keyword">as</span> <span class="variable">$k</span> =&gt; <span class="variable">$v</span> ) </span><br><span class="line">&#123;</span><br><span class="line">	<span class="variable">$o</span>.= <span class="string">&quot;<span class="subst">$k</span>=&quot;</span> . <span class="title function_ invoke__">urlencode</span>( <span class="variable">$v</span> ). <span class="string">&quot;&amp;&quot;</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$post_data</span> = <span class="title function_ invoke__">substr</span>(<span class="variable">$o</span>,<span class="number">0</span>,-<span class="number">1</span>);</span><br><span class="line"><span class="variable">$res</span> = <span class="title function_ invoke__">request_post</span>(<span class="variable">$url</span>, <span class="variable">$post_data</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$resjson</span> = <span class="title function_ invoke__">json_decode</span>(<span class="variable">$res</span>,<span class="literal">true</span>);</span><br><span class="line"><span class="variable">$token</span> = <span class="variable">$resjson</span>[<span class="string">&quot;access_token&quot;</span>];</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">request_post</span>(<span class="params"><span class="variable">$url</span> = <span class="string">&#x27;&#x27;</span>, <span class="variable">$param</span> = <span class="string">&#x27;&#x27;</span></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">empty</span>(<span class="variable">$url</span>) || <span class="keyword">empty</span>(<span class="variable">$param</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable">$postUrl</span> = <span class="variable">$url</span>;</span><br><span class="line">        <span class="variable">$curlPost</span> = <span class="variable">$param</span>;</span><br><span class="line">        <span class="variable">$curl</span> = <span class="title function_ invoke__">curl_init</span>();<span class="comment">//初始化curl</span></span><br><span class="line">        <span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_URL,<span class="variable">$postUrl</span>);<span class="comment">//抓取指定网页</span></span><br><span class="line">        <span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_HEADER, <span class="number">0</span>);<span class="comment">//设置header</span></span><br><span class="line">        <span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_RETURNTRANSFER, <span class="number">1</span>);<span class="comment">//要求结果为字符串且输出到屏幕上</span></span><br><span class="line">        <span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_POST, <span class="number">1</span>);<span class="comment">//post提交方式</span></span><br><span class="line">        <span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_POSTFIELDS, <span class="variable">$curlPost</span>);</span><br><span class="line">        <span class="variable">$data</span> = <span class="title function_ invoke__">curl_exec</span>(<span class="variable">$curl</span>);<span class="comment">//运行curl</span></span><br><span class="line">        <span class="title function_ invoke__">curl_close</span>(<span class="variable">$curl</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$data</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>4、识别图片文本，获取信息</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$ocrurl</span> = <span class="string">&quot;https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic&quot;</span>;</span><br><span class="line"><span class="variable">$basicGeneralUrl</span> = <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">basicGeneralUrl</span>(<span class="variable">$ocrurl</span>,<span class="string">&#x27;123.jpg&#x27;</span>,<span class="variable">$token</span>);</span><br><span class="line"><span class="variable">$ocrimg_json</span>     = <span class="title function_ invoke__">json_decode</span>(<span class="variable">$basicGeneralUrl</span>,<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">basicGeneralUrl</span>(<span class="params"><span class="variable">$ocrurl</span>,<span class="variable">$image</span>,<span class="variable">$token</span></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">empty</span>(<span class="variable">$image</span>) || <span class="keyword">empty</span>(<span class="variable">$ocrurl</span>) || <span class="keyword">empty</span>(<span class="variable">$token</span>)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	<span class="variable">$image_data</span> = <span class="title function_ invoke__">fread</span>(<span class="title function_ invoke__">fopen</span>(<span class="variable">$image</span>, <span class="string">&#x27;r&#x27;</span>), <span class="title function_ invoke__">filesize</span>(<span class="variable">$image</span>)+<span class="number">1</span>);</span><br><span class="line">	<span class="variable">$base64_image</span> = <span class="title function_ invoke__">base64_encode</span>((<span class="variable">$image_data</span>));<span class="comment">//需要编译</span></span><br><span class="line">	<span class="variable">$date</span> = <span class="keyword">array</span>(<span class="string">&#x27;image&#x27;</span>=&gt;<span class="variable">$base64_image</span>,<span class="string">&#x27;access_token&#x27;</span>=&gt;<span class="variable">$token</span>);</span><br><span class="line">	<span class="variable">$curl</span> = <span class="title function_ invoke__">curl_init</span>();<span class="comment">//初始化curl</span></span><br><span class="line">	<span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_URL,<span class="variable">$ocrurl</span>);<span class="comment">//抓取指定网页</span></span><br><span class="line">	<span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_HEADER, <span class="number">0</span>);<span class="comment">//设置header</span></span><br><span class="line">	<span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_RETURNTRANSFER, <span class="number">1</span>);<span class="comment">//要求结果为字符串且输出到屏幕上</span></span><br><span class="line">	<span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_POST, <span class="number">1</span>);<span class="comment">//post提交方式</span></span><br><span class="line">	<span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$curl</span>, CURLOPT_POSTFIELDS, <span class="variable">$date</span>);</span><br><span class="line">	<span class="variable">$data</span> = <span class="title function_ invoke__">curl_exec</span>(<span class="variable">$curl</span>);<span class="comment">//运行curl</span></span><br><span class="line">	<span class="title function_ invoke__">curl_close</span>(<span class="variable">$curl</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="variable">$data</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>php</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python日常</title>
+    <url>/2018/04/09/Python%E6%97%A5%E5%B8%B8/</url>
+    <content><![CDATA[<blockquote>
+<p>参考文档： <a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000">https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000</a></p>
+</blockquote>
+<ul>
+<li><h3 id="Python-格式"><a href="#Python-格式" class="headerlink" title="Python 格式"></a>Python 格式</h3></li>
+</ul>
+<ol>
+<li>文件结尾为 .py，如123.py</li>
+<li>输出使用 print(),如下图，可输出多个字符串，用“，”隔开python试了下输出结尾不加分号也可以，我是出于习惯带上</li>
+</ol>
+<span id="more"></span>
+
+
+
+<p><img src="/../image/image-20180409173759.png" alt="20180409173759"></p>
+<ul>
+<li><h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3></li>
+</ul>
+<p><strong>1、算术运算符</strong></p>
+<p> 加、减、乘、除、除取整、除取余、次方</p>
+<p> +、 -、 *、 &#x2F;、 &#x2F;&#x2F;、 %、 **</p>
+<p><strong>2、位运算符</strong></p>
+<p>且、或、取反，异或，向左位移（二进制）、向右位移（二进制）</p>
+<p>&amp;、 |、 ~、 ^、 &lt;&lt;&lt;、 &gt;&gt;&gt;</p>
+]]></content>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+</search>
