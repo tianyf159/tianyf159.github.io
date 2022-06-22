@@ -35,7 +35,7 @@
 <meta property="og:image" content="http://example.com/image/image-1SFoZZfqlYNJJAqWg1h1Dw.png">
 <meta property="og:image" content="http://example.com/image/image-7yPl7SerV1LHpWQ6yGvsXg.png">
 <meta property="article:published_time" content="2022-06-21T08:30:27.000Z">
-<meta property="article:modified_time" content="2022-06-21T09:04:18.516Z">
+<meta property="article:modified_time" content="2022-06-22T06:20:41.162Z">
 <meta property="article:author" content="莫名_">
 <meta property="article:tag" content="可视化">
 <meta property="article:tag" content="linux">
@@ -217,85 +217,53 @@
 <p>※ node_exporter：收集服务器资源相关数据。</p>
 <p>※ Prometheus：用于储存及收集数据。</p>
 <p>※ Grafana：展示数据。</p>
-<h2 id="二、部署-node-exporter"><a href="#二、部署-node-exporter" class="headerlink" title="二、部署 node_exporter"></a><strong>二、部署 node_exporter</strong></h2><ol>
-<li><h3 id="下载部署命令："><a href="#下载部署命令：" class="headerlink" title="下载部署命令："></a><strong>下载部署命令：</strong></h3></li>
-</ol>
-<p>cd &#x2F;usr&#x2F;local&#x2F;src&#x2F;</p>
-<p>wget <a target="_blank" rel="noopener" href="https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz">https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz</a></p>
+<h2 id="二、部署-node-exporter"><a href="#二、部署-node-exporter" class="headerlink" title="二、部署 node_exporter"></a><strong>二、部署 node_exporter</strong></h2><h3 id="下载部署命令："><a href="#下载部署命令：" class="headerlink" title="下载部署命令："></a><strong>下载部署命令：</strong></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src/</span><br><span class="line"></span><br><span class="line">wget https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+
 <p>服务器下载太慢时，可以直接从 GitHub 网站下载，并将压缩包上传至服务器。</p>
-<p>tar -zxvf node_exporter-1.2.2.linux-amd64.tar.gz -C &#x2F;usr&#x2F;local&#x2F;</p>
-<p>cd &#x2F;usr&#x2F;local&#x2F;</p>
-<p>mv node_exporter-1.2.2.linux-amd64&#x2F; node_exporter&#x2F;</p>
-<ol>
-<li><h3 id="启动-node-exporter-命令-："><a href="#启动-node-exporter-命令-：" class="headerlink" title="启动 node_exporter 命令****："></a><strong>启动 node_exporter 命令****：</strong></h3></li>
-</ol>
-<p>nohup &#x2F;usr&#x2F;local&#x2F;node_exporter&#x2F;node_exporter &amp;</p>
-<ol>
-<li><h3 id="验证访问："><a href="#验证访问：" class="headerlink" title="验证访问："></a><strong>验证访问：</strong></h3></li>
-</ol>
-<p>访问 <a href="http://192.168.9.128:9100，这里的">http://192.168.9.128:9100，这里的</a> IP 替换为服务器 IP 。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf node_exporter-1.2.2.linux-amd64.tar.gz -C /usr/local/</span><br><span class="line"></span><br><span class="line">cd /usr/local/</span><br><span class="line"></span><br><span class="line">mv node_exporter-1.2.2.linux-amd64/ node_exporter/</span><br></pre></td></tr></table></figure>
+
+<h3 id="启动-node-exporter-命令："><a href="#启动-node-exporter-命令：" class="headerlink" title="启动 node_exporter 命令："></a><strong>启动 node_exporter 命令</strong>：</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">nohup</span> /usr/local/node_exporter/node_exporter &amp;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="验证访问："><a href="#验证访问：" class="headerlink" title="验证访问："></a><strong>验证访问：</strong></h3><p>访问 <a href="http://192.168.9.128:9100，这里的">http://192.168.9.128:9100，这里的</a> IP 替换为服务器 IP 。</p>
 <p>出现以下页面说明启动成功：</p>
 <p>​                 <img src="/../image/image-dOtiIwqLjjMLYQuI38FNYg.png" alt="img">        </p>
-<h2 id="三、部署-Prometheus"><a href="#三、部署-Prometheus" class="headerlink" title="三、部署 Prometheus"></a><strong>三、部署 Prometheus</strong></h2><ol>
-<li><h3 id="下载部署命令：-1"><a href="#下载部署命令：-1" class="headerlink" title="下载部署命令："></a><strong>下载部署命令：</strong></h3></li>
-</ol>
-<p>cd &#x2F;usr&#x2F;local&#x2F;src&#x2F;</p>
-<p>wget <a target="_blank" rel="noopener" href="https://github.com/prometheus/prometheus/releases/download/v2.29.1/prometheus-2.29.1.linux-amd64.tar.gz">https://github.com/prometheus/prometheus/releases/download/v2.29.1/prometheus-2.29.1.linux-amd64.tar.gz</a></p>
-<p>cd &#x2F;usr&#x2F;local&#x2F;src&#x2F;</p>
-<p>tar -zxvf prometheus-2.29.1.linux-amd64.tar.gz -C &#x2F;usr&#x2F;local&#x2F;</p>
-<p>cd &#x2F;usr&#x2F;local&#x2F;</p>
-<p>mv prometheus-2.29.1.linux-amd64&#x2F; prometheus&#x2F;</p>
-<ol>
-<li><h3 id="修改配置文件："><a href="#修改配置文件：" class="headerlink" title="修改配置文件："></a><strong>修改配置文件：</strong></h3></li>
-</ol>
-<p>vim prometheus.yml</p>
+<h2 id="三、部署-Prometheus"><a href="#三、部署-Prometheus" class="headerlink" title="三、部署 Prometheus"></a><strong>三、部署 Prometheus</strong></h2><h3 id="下载部署命令：-1"><a href="#下载部署命令：-1" class="headerlink" title="下载部署命令："></a><strong>下载部署命令：</strong></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src/</span><br><span class="line"></span><br><span class="line">wget https://github.com/prometheus/prometheus/releases/download/v2.29.1/prometheus-2.29.1.linux-amd64.tar.gz</span><br><span class="line"></span><br><span class="line">cd /usr/local/src/</span><br><span class="line"></span><br><span class="line">tar -zxvf prometheus-2.29.1.linux-amd64.tar.gz -C /usr/local/</span><br><span class="line"></span><br><span class="line">cd /usr/local/</span><br><span class="line"></span><br><span class="line">mv prometheus-2.29.1.linux-amd64/ prometheus/</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="修改配置文件："><a href="#修改配置文件：" class="headerlink" title="修改配置文件："></a><strong>修改配置文件：</strong></h3><p>vim prometheus.yml</p>
 <p>修改成当前服务器的 IP ：</p>
 <p>​                 <img src="/../image/image-h-O_Px3yqerEj-SZ7e5v0A.png" alt="img">        </p>
-<ol>
-<li><h3 id="启动-prometheus-命令-："><a href="#启动-prometheus-命令-：" class="headerlink" title="启动 prometheus 命令****："></a><strong>启动 prometheus 命令****：</strong></h3></li>
-</ol>
-<p>nohup &#x2F;usr&#x2F;local&#x2F;prometheus&#x2F;prometheus –config.file&#x3D;&#x2F;usr&#x2F;local&#x2F;prometheus&#x2F;prometheus.yml –storage.tsdb.path&#x3D;&#x2F;var&#x2F;lib&#x2F;prometheus &amp;</p>
-<ol>
-<li><h3 id="验证访问：-1"><a href="#验证访问：-1" class="headerlink" title="验证访问："></a><strong>验证访问：</strong></h3></li>
-</ol>
-<p>访问 <a href="http://192.168.9.128:9090，这里的">http://192.168.9.128:9090，这里的</a> IP 替换为服务器 IP 。</p>
+<h3 id="启动-prometheus-命令-："><a href="#启动-prometheus-命令-：" class="headerlink" title="启动 prometheus 命令****："></a><strong>启动 prometheus 命令****：</strong></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup /usr/local/prometheus/prometheus --config.file=/usr/local/prometheus/prometheus.yml --storage.tsdb.path=/var/lib/prometheus &amp;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="验证访问：-1"><a href="#验证访问：-1" class="headerlink" title="验证访问："></a><strong>验证访问：</strong></h3><p>访问 <a href="http://192.168.9.128:9090，这里的">http://192.168.9.128:9090，这里的</a> IP 替换为服务器 IP 。</p>
 <p>出现以下页面说明启动成功：</p>
 <p>​                        <img src="/../image/image-u2cs4ZiXNZcGBS7DOUv-4Q.png" alt="img">        </p>
 <p>​                 <img src="/../image/image-g6Zvc8Cmugh56f0yz3E8WQ.png" alt="img">        </p>
 <p>​                 <img src="/../image/image-jtpttWfYRMmSVbpCKFcCiw.png" alt="img">        </p>
-<ol>
-<li><h3 id="修改配置文件：-1"><a href="#修改配置文件：-1" class="headerlink" title="修改配置文件："></a><strong>修改配置文件：</strong></h3></li>
-</ol>
-<p>默认 prometheus 接收 node_exporter 采集的数据，再次修改 prometheus 配置文件，重新启动 prometheus 。</p>
+<h3 id="修改配置文件：-1"><a href="#修改配置文件：-1" class="headerlink" title="修改配置文件："></a><strong>修改配置文件：</strong></h3><p>默认 prometheus 接收 node_exporter 采集的数据，再次修改 prometheus 配置文件，重新启动 prometheus 。</p>
 <p>vim prometheus.yml</p>
 <p>​                 <img src="/../image/image-ngz7dc2ogbXF7cpXrj8Elg.png" alt="img">        </p>
-<p>netstat -anput</p>
-<p>kill -9 2735</p>
-<p>nohup &#x2F;usr&#x2F;local&#x2F;prometheus&#x2F;prometheus –config.file&#x3D;&#x2F;usr&#x2F;local&#x2F;prometheus&#x2F;prometheus.yml –storage.tsdb.path&#x3D;&#x2F;var&#x2F;lib&#x2F;prometheus &amp;</p>
-<ol>
-<li><h3 id="重启后验证访问："><a href="#重启后验证访问：" class="headerlink" title="重启后验证访问："></a><strong>重启后验证访问：</strong></h3></li>
-</ol>
-<p>访问：<a target="_blank" rel="noopener" href="http://192.168.9.128:9090/targets">http://192.168.9.128:9090/targets</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">netstat -anput</span><br><span class="line"></span><br><span class="line">kill -9 2735</span><br><span class="line"></span><br><span class="line">nohup /usr/local/prometheus/prometheus --config.file=/usr/local/prometheus/prometheus.yml --storage.tsdb.path=/var/lib/prometheus &amp;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="重启后验证访问："><a href="#重启后验证访问：" class="headerlink" title="重启后验证访问："></a><strong>重启后验证访问：</strong></h3><p>访问：<a target="_blank" rel="noopener" href="http://192.168.9.128:9090/targets">http://192.168.9.128:9090/targets</a></p>
 <p>​                 <img src="/../image/image-SMz0y840P5fXJ0dfW05bog.png" alt="img">        </p>
-<h2 id="四、部署-Grafana"><a href="#四、部署-Grafana" class="headerlink" title="四、部署 Grafana"></a><strong>四、部署 Grafana</strong></h2><ol>
-<li><h3 id="下载部署命令：-2"><a href="#下载部署命令：-2" class="headerlink" title="下载部署命令："></a><strong>下载部署命令：</strong></h3></li>
-</ol>
-<p>cd &#x2F;usr&#x2F;local&#x2F;src&#x2F; </p>
-<p>wget <a target="_blank" rel="noopener" href="https://dl.grafana.com/oss/release/grafana-8.1.2-1.x86_64.rpm">https://dl.grafana.com/oss/release/grafana-8.1.2-1.x86_64.rpm</a></p>
-<p>yum localinstall grafana-8.1.2-1.x86_64.rpm</p>
-<ol>
-<li><h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a><strong>配置文件</strong></h3></li>
-</ol>
-<p>配置文件位于 &#x2F;etc&#x2F;grafana&#x2F;grafana.ini ，这里暂时保持默认配置即可。</p>
-<ol>
-<li><h3 id="开机自启动"><a href="#开机自启动" class="headerlink" title="开机自启动"></a><strong>开机自启动</strong></h3></li>
-</ol>
-<p>systemctl enable grafana-server</p>
-<p>systemctl start grafana-server</p>
-<ol>
-<li><h3 id="验证访问"><a href="#验证访问" class="headerlink" title="验证访问"></a><strong>验证访问</strong></h3></li>
-</ol>
-<p>访问 <a href="http://192.168.9.128:3000，这里的">http://192.168.9.128:3000，这里的</a> IP 替换为服务器 IP 。</p>
+<h2 id="四、部署-Grafana"><a href="#四、部署-Grafana" class="headerlink" title="四、部署 Grafana"></a><strong>四、部署 Grafana</strong></h2><h3 id="下载部署命令：-2"><a href="#下载部署命令：-2" class="headerlink" title="下载部署命令："></a><strong>下载部署命令：</strong></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src/ </span><br><span class="line"></span><br><span class="line">wget https://dl.grafana.com/oss/release/grafana-8.1.2-1.x86_64.rpm</span><br><span class="line"></span><br><span class="line">yum localinstall grafana-8.1.2-1.x86_64.rpm</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a><strong>配置文件</strong></h3><p>配置文件位于 &#x2F;etc&#x2F;grafana&#x2F;grafana.ini ，这里暂时保持默认配置即可。</p>
+<h3 id="开机自启动"><a href="#开机自启动" class="headerlink" title="开机自启动"></a><strong>开机自启动</strong></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable grafana-server</span><br><span class="line"></span><br><span class="line">systemctl start grafana-server</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="验证访问"><a href="#验证访问" class="headerlink" title="验证访问"></a><strong>验证访问</strong></h3><p>访问 <a href="http://192.168.9.128:3000，这里的">http://192.168.9.128:3000，这里的</a> IP 替换为服务器 IP 。</p>
 <p>默认账号名&#x2F;密码：admin&#x2F;admin。（首次登录会修改密码）</p>
 <p>​                 <img src="/../image/image-7KR-NMwJw9yv4IPIgDrKQQ.png" alt="img">        </p>
 <ol>
